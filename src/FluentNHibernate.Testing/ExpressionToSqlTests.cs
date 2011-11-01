@@ -16,6 +16,14 @@ namespace FluentNHibernate.Testing
         }
 
         [Test]
+        public void ConvertMethodToMethodName()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => x.StringMethod());
+
+            sql.ShouldEqual("StringMethod");
+        }
+
+        [Test]
         public void ConvertIntToValue()
         {
             var sql = ExpressionToSql.Convert<ChildObject>(x => 1);
@@ -56,11 +64,76 @@ namespace FluentNHibernate.Testing
         }
 
         [Test]
+        public void ConvertEqualsMethodAndString()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => x.StringMethod() == "1");
+
+            sql.ShouldEqual("StringMethod = '1'");
+        }
+
+
+        [Test]
+        public void ConvertBooleanMethod()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => x.BooleanMethod());
+
+            sql.ShouldEqual("BooleanMethod = 1");
+        }
+        
+        [Test]
+        public void ConvertBooleanMethodImplicitFalse()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => !x.BooleanMethod());
+
+            sql.ShouldEqual("BooleanMethod = 0");
+        }
+
+        [Test]
         public void ConvertEqualsPropertyAndTrue()
         {
             var sql = ExpressionToSql.Convert<ChildObject>(x => x.Active == true);
 
             sql.ShouldEqual("Active = 1");
+        }
+
+        [Test]
+        public void ConvertEqualsPropertyAndBooleanConstant()
+        {
+            var b = true;
+
+            var sql = ExpressionToSql.Convert<ChildObject>(x => x.Active == b);
+
+            sql.ShouldEqual("Active = 1");
+        }
+        
+        [Test]
+        public void ConvertBooleanConstant()
+        {
+            var b = true;
+
+            var sql = ExpressionToSql.Convert<ChildObject>(x => b);
+
+            sql.ShouldEqual("1 = 1");
+        }
+
+        [Test]
+        public void ConvertBooleanStaticProperty()
+        {
+            var b = true;
+
+            var sql = ExpressionToSql.Convert<ChildObject>(x => Values.StaticBooleanValue);
+
+            sql.ShouldEqual("0 = 1");
+        }
+
+        [Test]
+        public void ConvertBooleanNonStaticProperty()
+        {
+            var values = new Values();
+
+            var sql = ExpressionToSql.Convert<ChildObject>(x => values.BooleanValue);
+
+            sql.ShouldEqual("0 = 1");
         }
 
         [Test]
@@ -146,27 +219,35 @@ namespace FluentNHibernate.Testing
             sql.ShouldEqual("'someValue'");
         }
 
-        private class StaticExample
-        {
-            public static string Value = "someValue";
-            public static string Method()
-            {
-                return "someValue";
-            }
-        }
 
         [Test]
         public void ConvertStaticMemberReference()
         {
-            var sql = ExpressionToSql.Convert<ChildObject>(x => StaticExample.Value);
+            var sql = ExpressionToSql.Convert<ChildObject>(x => Values.StaticValue);
 
             sql.ShouldEqual("'someValue'");
         }
 
         [Test]
+        public void ConvertStaticNestedMemberReference()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => Values.StaticValue.IsNormalized());
+
+            sql.ShouldEqual("1 = 1");
+        }
+
+        [Test]
+        public void ConvertBooleanConst()
+        {
+            var sql = ExpressionToSql.Convert<ChildObject>(x => true);
+
+            sql.ShouldEqual("1 = 1");
+        }
+
+        [Test]
         public void ConvertStaticMethodCall()
         {
-            var sql = ExpressionToSql.Convert<ChildObject>(x => StaticExample.Method());
+            var sql = ExpressionToSql.Convert<ChildObject>(x => Values.Method());
 
             sql.ShouldEqual("'someValue'");
         }
@@ -190,6 +271,32 @@ namespace FluentNHibernate.Testing
             var sql = ExpressionToSql.Convert<ChildObject>(x => Something.Else);
 
             sql.ShouldEqual("10");
+        }
+
+        class ChildObject
+        {
+            public virtual string Name { get; set; }
+            public virtual int Position { get; set; }
+            public virtual bool Active { get; set; }
+            public virtual bool BooleanMethod()
+            {
+                return true;
+            }
+            public virtual string StringMethod()
+            {
+                return "stringMethod";
+            }
+        }
+
+        private class Values
+        {
+            public bool BooleanValue;
+            public static string StaticValue = "someValue";
+            public static bool StaticBooleanValue;
+            public static string Method()
+            {
+                return "someValue";
+            }
         }
     }
 }

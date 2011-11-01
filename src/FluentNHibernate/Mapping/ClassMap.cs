@@ -523,6 +523,17 @@ namespace FluentNHibernate.Mapping
     	}
 
         /// <summary>
+		/// Defines a SQL 'where' clause used when retrieving objects of this type.
+        /// Note: This only supports simple cases, use the string overload for more complex clauses.
+        /// </summary>
+        public void Where(Expression<Func<T, bool>> where)
+    	{
+            var sql = ExpressionToSql.Convert(where);
+
+            Where(sql);
+        }
+
+        /// <summary>
         /// Sets the SQL statement used in subselect fetching.
         /// </summary>
         /// <param name="subselectSql">Subselect SQL Query</param>

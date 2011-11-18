@@ -73,6 +73,11 @@ namespace FluentNHibernate.Visitors
 
         }
 
+        public virtual void ProcessManyToAny(ManyToAnyMapping mapping)
+        {
+
+        }
+
         public virtual void ProcessManyToMany(ManyToManyMapping manyToManyMapping)
         {
             

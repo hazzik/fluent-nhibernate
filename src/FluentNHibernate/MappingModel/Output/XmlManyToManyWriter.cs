@@ -55,7 +55,6 @@ namespace FluentNHibernate.MappingModel.Output
 
             if (mapping.IsSpecified("OrderBy"))
                 element.WithAtt("order-by", mapping.OrderBy);
-
         }
 
         public override void Visit(ColumnMapping mapping)

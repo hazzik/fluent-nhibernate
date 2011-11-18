@@ -6,12 +6,10 @@ bin
 obj
 _ReSharper*
 dist
-output
+/output
 build
 
-*.csproj.user
-
-*.resharper.user
+*.user
 
 *.resharper
 

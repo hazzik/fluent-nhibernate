@@ -22,6 +22,7 @@ namespace FluentNHibernate.Visitors
         void ProcessGenerator(GeneratorMapping generatorMapping);
         void ProcessColumn(ColumnMapping columnMapping);
         void ProcessOneToMany(OneToManyMapping oneToManyMapping);
+        void ProcessManyToAny(ManyToAnyMapping mapping);
         void ProcessManyToMany(ManyToManyMapping manyToManyMapping);
         void ProcessSubclass(SubclassMapping subclassMapping);
         void ProcessDiscriminator(DiscriminatorMapping discriminatorMapping);

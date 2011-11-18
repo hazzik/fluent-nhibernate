@@ -418,6 +418,7 @@
     <Compile Include="Conventions\ManyToManyTableNameConvention.cs" />
     <Compile Include="Conventions\ObjectExtensionsForConventions.cs" />
     <Compile Include="Conventions\ProxyConvention.cs" />
+    <Compile Include="MappingModel\AnyMappingBase.cs" />
     <Compile Include="MappingModel\Collections\LayeredColumns.cs" />
     <Compile Include="MappingModel\Layer.cs" />
     <Compile Include="MappingModel\ClassBased\ComponentType.cs" />
@@ -431,9 +432,11 @@
     <Compile Include="MappingModel\EqualityExtensions.cs" />
     <Compile Include="MappingModel\Identity\ICompositeIdKeyMapping.cs" />
     <Compile Include="MappingModel\IRelationship.cs" />
+    <Compile Include="MappingModel\ManyToAnyMapping.cs" />
     <Compile Include="MappingModel\NaturalIdMapping.cs" />
     <Compile Include="MappingModel\Output\CollectionAttributeWriter.cs" />
     <Compile Include="MappingModel\Output\XmlBagWriter.cs" />
+    <Compile Include="MappingModel\Output\XmlManyToAnyWriter.cs" />
     <Compile Include="MappingModel\Output\XmlNaturalIdWriter.cs" />
     <Compile Include="MappingModel\TuplizerMode.cs" />
     <Compile Include="Mapping\Access.cs" />

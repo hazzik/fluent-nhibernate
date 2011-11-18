@@ -80,6 +80,9 @@ namespace FluentNHibernate.MappingModel.Output
             RegisterWriter<AnyMapping>(c =>
                 new XmlAnyWriter(c.Resolve<IXmlWriterServiceLocator>()));
 
+            RegisterWriter<ManyToAnyMapping>(c =>
+                new XmlManyToAnyWriter(c.Resolve<IXmlWriterServiceLocator>()));
+
             RegisterWriter<MetaValueMapping>(c =>
                 new XmlMetaValueWriter());
 

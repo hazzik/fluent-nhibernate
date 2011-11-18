@@ -5,7 +5,7 @@ using System.Linq;
 namespace FluentNHibernate.MappingModel.Collections
 {
     [Serializable]
-    public class AttributeLayeredValues
+    public sealed class AttributeLayeredValues : IEquatable<AttributeLayeredValues>
     {
         readonly Dictionary<string, LayeredValues> inner = new Dictionary<string, LayeredValues>();
 
@@ -59,8 +59,9 @@ namespace FluentNHibernate.MappingModel.Collections
 
         public override bool Equals(object obj)
         {
-            if (obj is AttributeLayeredValues)
-                return Equals((AttributeLayeredValues)obj);
+            var other = obj as AttributeLayeredValues;
+            if (other != null)
+                return Equals(other);
             return base.Equals(obj);
         }
 

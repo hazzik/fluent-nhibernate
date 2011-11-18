@@ -25,7 +25,7 @@ namespace FluentNHibernate.Automapping.Steps
             if (type.Namespace != "Iesi.Collections.Generic" &&
                 type.Namespace != "System.Collections.Generic")
                 return false;
-            if (type.HasInterface(typeof(IDictionary)) || type.ClosesInterface(typeof(IDictionary<,>)) || type.Closes(typeof(System.Collections.Generic.IDictionary<,>)))
+            if (type.HasInterface(typeof(IDictionary)) || type.ClosesInterface(typeof(IDictionary<,>)) || type.Closes(typeof(IDictionary<,>)))
                 return false;
 
             var hasInverse = GetInverseProperty(member) != null;
@@ -41,8 +41,7 @@ namespace FluentNHibernate.Automapping.Steps
             var argument = type.GetGenericArguments()[0];
             return argument.GetProperties()
                 .Select(x => x.ToMember())
-                .Where(x => x.PropertyType == expectedInversePropertyType && x != member)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.PropertyType == expectedInversePropertyType && x != member);
         }
 
         static CollectionMapping GetCollection(Member property)

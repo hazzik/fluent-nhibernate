@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.Utils;
@@ -158,9 +159,9 @@ namespace FluentNHibernate.Mapping
         {
             var mapping = new AnyMapping(attributes.Clone());
 
-            if (typeColumns.Count() == 0)
+            if (typeColumns.IsEmpty())
                 throw new InvalidOperationException("<any> mapping is not valid without specifying an Entity Type Column");
-            if (identifierColumns.Count() == 0)
+            if (identifierColumns.IsEmpty())
                 throw new InvalidOperationException("<any> mapping is not valid without specifying an Entity Identifier Column");
             if (!idTypeSet)
                 throw new InvalidOperationException("<any> mapping is not valid without specifying an IdType");
@@ -174,7 +175,7 @@ namespace FluentNHibernate.Mapping
                 mapping.Set(x => x.MetaType, Layer.Defaults, new TypeReference(member.PropertyType));
             }
 
-            if (metaValues.Count() > 0)
+            if (metaValues.IsNotEmpty())
             {
                 metaValues.Each(mapping.AddMetaValue);
                 mapping.Set(x => x.MetaType, Layer.Defaults, new TypeReference(typeof(string)));

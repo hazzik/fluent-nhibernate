@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 using FluentNHibernate.Utils;
@@ -184,7 +185,7 @@ namespace FluentNHibernate.Mapping
         {
             var collection = base.GetCollectionMapping();
 
-            if (keyColumns.Count() == 0)
+            if (keyColumns.IsEmpty())
                 collection.Key.AddColumn(Layer.Defaults, new ColumnMapping(entity.Name + "_id"));
 
             foreach (var column in keyColumns)

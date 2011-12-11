@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
@@ -345,7 +346,7 @@ namespace FluentNHibernate.Mapping
             var collection = base.GetCollectionMapping();
 
             // key columns
-            if (parentKeyColumns.Count == 0)
+            if (parentKeyColumns.IsEmpty())
                 collection.Key.AddColumn(Layer.Defaults, new ColumnMapping(EntityType.Name + "_id"));
 
             foreach (var column in parentKeyColumns)
@@ -354,7 +355,7 @@ namespace FluentNHibernate.Mapping
             if (collection.Relationship != null)
             {
                 // child columns
-                if (childKeyColumns.Count == 0)
+                if (childKeyColumns.IsEmpty())
                     ((ManyToManyMapping)collection.Relationship).AddColumn(Layer.Defaults, new ColumnMapping(typeof(TChild).Name + "_id"));
 
                 foreach (var column in childKeyColumns)

@@ -204,7 +204,7 @@ namespace FluentNHibernate
                 hbm.AddFilter(filterDefinition.GetFilterMapping());
             }
 
-            if (hbm.Classes.Count() > 0)
+            if (hbm.Classes.IsNotEmpty())
                 add(hbm);
         }
 
@@ -231,7 +231,7 @@ namespace FluentNHibernate
             if (MergeMappings)
                 return GetMappingFileName();
 
-            if (mapping.Classes.Count() > 0)
+            if (mapping.Classes.IsNotEmpty())
                 return mapping.Classes.First().Type.FullName + ".hbm.xml";
 
             return "filter-def." + mapping.Filters.First().Name + ".hbm.xml";
@@ -276,14 +276,14 @@ namespace FluentNHibernate
         {
             EnsureMappingsBuilt();
 
-            foreach (var mapping in compiledMappings.Where(m => m.Classes.Count() == 0))
+            foreach (var mapping in compiledMappings.Where(m => m.Classes.IsEmpty()))
             {
                 var serializer = new MappingXmlSerializer();
                 XmlDocument document = serializer.Serialize(mapping);
                 cfg.AddDocument(document);
             }
 
-            foreach (var mapping in compiledMappings.Where(m => m.Classes.Count() > 0))
+            foreach (var mapping in compiledMappings.Where(m => m.Classes.IsNotEmpty()))
             {
                 var serializer = new MappingXmlSerializer();
                 XmlDocument document = serializer.Serialize(mapping);

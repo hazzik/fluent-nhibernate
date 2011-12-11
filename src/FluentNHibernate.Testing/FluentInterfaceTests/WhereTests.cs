@@ -83,6 +83,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .ShouldEqual("Int < 1");
         }
 
+        [Test]
         public void ShouldAllowGreaterOrEqual()
         {
             Where(x => x.Int >= 1)
@@ -103,36 +104,39 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .ShouldEqual("some where clause");
         }
 
-        #region helpers
-
-        private string Where(Expression<Func<Child, bool>> where)
+        [Test]
+        public void ShouldAllowUsePropertyName()
         {
-            var classMap = new ClassMap<Target>();
-            classMap.Id(x => x.Id);
-            classMap.HasMany(x => x.Children)
-                .Where(where);
-
-            var model = new PersistenceModel();
-
-            model.Add(classMap);
-
-            return model.BuildMappings()
-                .First()
-                .Classes.First()
-                .Collections.First()
-                .Where;
+            Where(x => x.WithCustomName == 1)
+                .ShouldEqual("CUSTOM = 1");
         }
 
-        private string Where(string where)
+        #region helpers
+
+        static string Where(Expression<Func<Child, bool>> where)
         {
-            var classMap = new ClassMap<Target>();
-            classMap.Id(x => x.Id);
-            classMap.HasMany(x => x.Children)
-                .Where(where);
+            return Configure(part => part.Where(where));
+        }
+
+        static string Where(string where)
+        {
+            return Configure(part => part.Where(where));
+        }
+
+        static string Configure(Action<OneToManyPart<Child>> oneToManyPart)
+        {
+            var target = new ClassMap<Target>();
+            target.Id(x => x.Id);
+
+            oneToManyPart(target.HasMany(x => x.Children));
+
+            var child = new ClassMap<Child>();
+            child.Map(x => x.WithCustomName)
+                .Column("CUSTOM");
 
             var model = new PersistenceModel();
 
-            model.Add(classMap);
+            model.Add(target);
 
             return model.BuildMappings()
                 .First()
@@ -154,6 +158,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
             public string String { get; set; }
             public int Int { get; set; }
             public Enum Enum { get; set; }
+            public int WithCustomName { get; set; }
         }
 
         private enum Enum

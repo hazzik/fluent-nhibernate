@@ -12,7 +12,7 @@ namespace FluentNHibernate.Mapping
     /// and use the constructor to control how your component is persisted.
     /// </summary>
     /// <example>
-    /// public class AddressMap : ComponentMap&lt;Address&gt;
+    /// public class AddressMap : ComponentMap{Address}
     /// {
     ///   public AddressMap()
     ///   {

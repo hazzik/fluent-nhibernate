@@ -5,7 +5,7 @@ require './tools/albacore/nuspec_patch'
 NH_VERSION = '3.x'
 
 def get_version
-  ENV['BUILD_NUMBER'] || '1.3.0.0'
+  ENV['BUILD_NUMBER'] || '1.4.1.0'
 end
 
 task :default => 'build:all'
@@ -138,18 +138,19 @@ namespace :package do
   end
   
   nuspec do |nu|
-    nu.id = 'FluentNHibernate'
+    nu.id = 'FluentNHibernate-hazzik'
     nu.version = get_version()
     nu.authors = 'James Gregory and contributors'
+    nu.owners = 'hazzik, jagregory'
     nu.description = 'Fluent, XML-less, compile safe, automated, convention-based mappings for NHibernate.'
     nu.title = 'Fluent NHibernate'
-    nu.language = 'en-US'
-    nu.licenseUrl = 'http://github.com/jagregory/fluent-nhibernate/raw/master/LICENSE.txt'
+    nu.licenseUrl = 'http://github.com/hazzik/fluent-nhibernate/raw/master/LICENSE.txt'
     nu.projectUrl = 'http://fluentnhibernate.org'
     nu.dependency 'NHibernate', '3.3.0.4000'
     nu.working_directory = 'build'
     nu.output_file = 'fluentnhibernate.nuspec'
     nu.file 'FluentNHibernate.dll', 'lib'
+    nu.file 'FluentNHibernate.pdb', 'lib'
     nu.file 'FluentNHibernate.xml', 'lib'
     nu.tags = 'orm dal nhibernate conventions'
   end

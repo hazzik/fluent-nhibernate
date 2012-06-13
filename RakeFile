@@ -5,7 +5,7 @@ require './tools/albacore/nuspec_patch'
 NH_VERSION = '3.x'
 
 def get_version
-  ENV['BUILD_NUMBER'] || '1.4.1.0'
+  ENV['BUILD_NUMBER'] || '1.4.2.0'
 end
 
 task :default => 'build:all'

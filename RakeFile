@@ -34,17 +34,7 @@ namespace :source do
   end
   
   task :nhibernate_version, :nhibernate_version do |t,args|
-    args.with_defaults :nhibernate_version => ENV['nhibernate_version'] || NH_VERSION
     
-    raise "Unknown NHibernate version #{args.nhibernate_version} (check your tools/NHibernate folder)" unless File.directory? "tools/NHibernate/#{args.nhibernate_version}"
-    
-    # clear out existing selected nh version
-    files_to_delete = Dir["tools/NHibernate/*.*"].reject {|f| File.directory? f }
-    files_to_delete.each {|f| File.delete f }
-    
-    # copy specific nh version files to the main directory
-    files_to_copy = Dir["tools/NHibernate/#{args.nhibernate_version}/*.*"]
-    files_to_copy.each {|f| FileUtils.copy f, "tools/NHibernate/" }
   end
 
   desc 'Compile the source'

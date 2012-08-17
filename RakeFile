@@ -160,7 +160,7 @@ namespace :package do
   end
 
   nugetpack do |nu|
-    nu.command = 'tools/nuget/NuGet.exe'
+    nu.command = 'src/.nuget/NuGet.exe'
     nu.nuspec = 'build/fluentnhibernate.nuspec'
     nu.base_folder = 'build'
     nu.output = 'dist'

@@ -23,4 +23,7 @@ build
 *~
 
 *.swp
+
 TestResult.xml
+
+src/packages/*

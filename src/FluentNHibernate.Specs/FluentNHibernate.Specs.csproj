@@ -57,7 +57,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Iesi.Collections">
-      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\packages\Iesi.Collections.3.3.1.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Specifications">
       <HintPath>..\packages\Machine.Specifications.0.5.8\lib\net20\Machine.Specifications.dll</HintPath>

@@ -147,7 +147,7 @@ namespace :package do
     nu.authors = 'James Gregory and contributors'
     nu.owners = 'hazzik, jagregory'
     nu.description = 'Fluent, XML-less, compile safe, automated, convention-based mappings for NHibernate.'
-    nu.title = 'Fluent NHibernate'
+    nu.title = 'Fluent NHibernate (hazzik`s private build)'
     nu.licenseUrl = 'http://github.com/hazzik/fluent-nhibernate/raw/master/LICENSE.txt'
     nu.projectUrl = 'http://fluentnhibernate.org'
     nu.dependency 'NHibernate', '3.3.1.4000'

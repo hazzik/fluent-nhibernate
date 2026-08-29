@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using FluentNHibernate.Mapping.Providers;
+using FluentNHibernate.MappingModel;
 using FluentNHibernate.Utils;
 
 namespace FluentNHibernate.Mapping;
@@ -400,7 +401,7 @@ public abstract class ClasslikeMapBase<T>(MappingProviderStore providers)
     /// Specify an insert stored procedure
     /// </summary>
     /// <param name="innerText">Stored procedure call</param>
-    public StoredProcedurePart SqlInsert(string innerText)
+    public virtual StoredProcedurePart SqlInsert(string innerText)
     {
         return StoredProcedure("sql-insert", innerText);
     }
@@ -409,7 +410,7 @@ public abstract class ClasslikeMapBase<T>(MappingProviderStore providers)
     /// Specify an update stored procedure
     /// </summary>
     /// <param name="innerText">Stored procedure call</param>
-    public StoredProcedurePart SqlUpdate(string innerText)
+    public virtual StoredProcedurePart SqlUpdate(string innerText)
     {
         return StoredProcedure("sql-update", innerText);
     }
@@ -418,7 +419,7 @@ public abstract class ClasslikeMapBase<T>(MappingProviderStore providers)
     /// Specify an delete stored procedure
     /// </summary>
     /// <param name="innerText">Stored procedure call</param>
-    public StoredProcedurePart SqlDelete(string innerText)
+    public virtual StoredProcedurePart SqlDelete(string innerText)
     {
         return StoredProcedure("sql-delete", innerText);
     }
@@ -427,7 +428,7 @@ public abstract class ClasslikeMapBase<T>(MappingProviderStore providers)
     /// Specify an delete all stored procedure
     /// </summary>
     /// <param name="innerText">Stored procedure call</param>
-    public StoredProcedurePart SqlDeleteAll(string innerText)
+    public virtual StoredProcedurePart SqlDeleteAll(string innerText)
     {
         return StoredProcedure("sql-delete-all", innerText);
     }
@@ -437,6 +438,17 @@ public abstract class ClasslikeMapBase<T>(MappingProviderStore providers)
         var part = new StoredProcedurePart(element, innerText);
         providers.StoredProcedures.Add(part);
         return part;
+    }
+    
+    protected TuplizerPart CreateTuplizerPart(TuplizerMode mode, Type tuplizerType)
+    {
+        providers.TuplizerMapping = new TuplizerMapping();
+        providers.TuplizerMapping.Set(x => x.Mode, Layer.UserSupplied, mode);
+        providers.TuplizerMapping.Set(x => x.Type, Layer.UserSupplied, new TypeReference(tuplizerType));
+
+        return new TuplizerPart(providers.TuplizerMapping)
+            .Type(tuplizerType)
+            .Mode(mode);
     }
 
     internal IEnumerable<IPropertyMappingProvider> Properties => providers.Properties;
